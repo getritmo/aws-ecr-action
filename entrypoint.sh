@@ -74,7 +74,7 @@ function create_ecr_repo() {
     if [ $exit_code -ne 0 ]; then
       if echo ${output} | grep -q RepositoryNotFoundException; then
         echo "== REPO DOESN'T EXIST, CREATING.."
-        aws ecr create-repository --region $AWS_DEFAULT_REGION --repository-name $INPUT_REPO
+        aws ecr create-repository --region $AWS_DEFAULT_REGION --repository-name $INPUT_REPO --image-tag-mutability IMMUTABLE  --image-scanning-configuration scanOnPush=true
         echo "== FINISHED CREATE REPO"
       else
         >&2 echo ${output}
